@@ -12,7 +12,7 @@ namespace CapstoneTaskList
 
             List<string> taskList = new List<string>
             {
-                "\t1.  List tasks", "\t2.  Add task", "\t3.  Delete task", "\t4.  Mark task complete", "\t5.  Quit" 
+                "\t1.  List tasks", "\t2.  Add task", "\t3.  Delete task", "\t4.  Mark task complete", "\t5.  Quit"
             };
 
             PrintList(taskList);
@@ -25,7 +25,7 @@ namespace CapstoneTaskList
 
             };
 
-            
+
             string option = GetUserInput("\nWhat would you like to do?");
 
             if (option == "1")
@@ -34,12 +34,12 @@ namespace CapstoneTaskList
             }
             else if (option == "2") //want to add user input to displayTasks needs to include employee, duty, and dueDate
             {
-                
-                
+
+
                 bool keepAdding = true;
                 do
                 {
-                    AddUserInputToList(taskList, "Enter employee, duty, and due date: ");
+                    AddUserInputToList(displayTasks);
                     keepAdding = KeepGoing("Do you have more tasks to add?", "n", "y");
                     PrintList(displayTasks);
                 }
@@ -86,11 +86,11 @@ namespace CapstoneTaskList
             for (int i = 0; i < taskList.Count; i++)//have to input the fields from the duties class
             {
                 Console.WriteLine();
-                Console.WriteLine((i+1)+":");
+                Console.WriteLine((i + 1) + ":");
                 Console.WriteLine($"\t{taskList[i].Employee}");
                 Console.WriteLine($"\t{taskList[i].DueDate}");
                 Console.WriteLine($"\t{taskList[i].Duty}");
-                Console.WriteLine($"\t{taskList[i].Complete}");
+                Console.WriteLine(taskList[i].Complete == true ? "Completed" : "Not Completed");
                 Console.WriteLine();
 
             }
@@ -105,20 +105,23 @@ namespace CapstoneTaskList
 
 
         //Method to get userInput
-        public static string GetUserInput (string message)
+        public static string GetUserInput(string message)
         {
             Console.WriteLine(message);
             return Console.ReadLine();
         }
-        
+
         //Method to add task
-       public static void AddUserInputToList(List<string>listOfStrings, string message)
+        public static void AddUserInputToList(List<Duties> taskList)
         {
-            string input = GetUserInput(message);
-            listOfStrings.Add(input);
+            string optionName = GetUserInput("\nWhat is their name?");
+            string optionDescription = GetUserInput("\nWhat is their duty?");
+            string optionDate = GetUserInput("\nWhen is it due?");
+
+            taskList.Add(new Duties(optionName, optionDescription, DateTime.Parse(optionDate)));
         }
 
-        
+
 
     }
 
